@@ -1,7 +1,7 @@
 [![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=3982658&assignment_repo_type=AssignmentRepo)
 # CMPS 2200  Recitation 01
 
-**Names (Team Members):**_________________________  
+**Names (Team Members):** **Garrett Gilliom**, **Ryan Park**, **Yuxuan Zhang** **Carly Presz**
 
 
 In this recitation, we will investigate asymptotic complexity. Additionally, we will get familiar with the various technologies we'll use for collaborative coding.
@@ -38,37 +38,51 @@ To complete this recitation, follow the instructions in this document. Some of y
 
 We'll compare the running times of `linear_search` and `binary_search` empirically.
 
-- [ ] 1. In `main.py`, the implementation of `linear_search` is already complete. Your task is to implement `binary_search`. Implement a recursive solution using the helper function `_binary_search`. 
+- [x] 1. In `main.py`, the implementation of `linear_search` is already complete. Your task is to implement `binary_search`. Implement a recursive solution using the helper function `_binary_search`. 
 
-- [ ] 2. Test that your function is correct by calling from the command-line `pytest main.py::test_binary_search`
+- [x] 2. Test that your function is correct by calling from the command-line `pytest main.py::test_binary_search`
 
-- [ ] 3. Write at least two additional test cases in `test_binary_search` and confirm they pass.
+- [x] 3. Write at least two additional test cases in `test_binary_search` and confirm they pass.
 
-- [ ] 4. Describe the worst case input value of `key` for `linear_search`? for `binary_search`? 
+- [x] 4. Describe the worst case input value of `key` for `linear_search`? for `binary_search`? 
 
-**TODO: your answer goes here**
-Linear Search: the key is not in the list or in the end of list.
-Binary Search: the key is not in the list or the first/last value.
+**Linear Search:** the key is not in the list or in the end of list.
+**Binary Search:** the key is not in the list or the first/last value.
 
-- [ ] 5. Describe the best case input value of `key` for `linear_search`? for `binary_search`? 
+- [x] 5. Describe the best case input value of `key` for `linear_search`? for `binary_search`? 
 
-**TODO: your answer goes here**
-Linear Search: the key is the first element in the list.
-Binary Search: the key is in the middle of the list.
+**Linear Search:** the key is the first element in the list.
+**Binary Search:** the key is in the middle of the list.
 
-- [ ] 6. Complete the `time_search` function to compute the running time of a search function. Note that this is an example of a "higher order" function, since one of its parameters is another function.
+- [x] 6. Complete the `time_search` function to compute the running time of a search function. Note that this is an example of a "higher order" function, since one of its parameters is another function.
 
-- [ ] 7. Complete the `compare_search` function to compare the running times of linear search and binary search. Confirm the implementation by running `pytest main.py::test_compare_search`, which contains some simple checks.
+- [x] 7. Complete the `compare_search` function to compare the running times of linear search and binary search. Confirm the implementation by running `pytest main.py::test_compare_search`, which contains some simple checks.
 
-- [ ] 8. Call `print_results(compare_search())` and paste the results here:
+- [x] 8. Call `print_results(compare_search())` and paste the results here:
 
-**TODO: add your timing results here**
+|        n |   linear |   binary |
+|----------|----------|----------|
+|       10 |    0.005 |    0.004 |
+|      100 |    0.011 |    0.014 |
+|     1000 |    0.105 |    0.008 |
+|    10000 |    1.211 |    0.018 |
+|   100000 |   11.100 |    0.018 |
+|  1000000 |  251.453 |    0.033 |
+| 10000000 | 2101.483 |    0.060 |
 
-- [ ] 9. The theoretical worst-case running time of linear search is $O(n)$ and binary search is $O(log_2(n))$. Do these theoretical running times match your empirical results? Why or why not?
+- [x] 9. The theoretical worst-case running time of linear search is $O(n)$ and binary search is $O(log_2(n))$. Do these theoretical running times match your empirical results? Why or why not?
 
-**TODO: your answer goes here**
+We used scikit-learn to run a regression for both linear and binary data. Linear search runtime vs n showed linear behavior with an $R^2$ value of 0.999. Binary search runtime vs $log_2{n}$ showed linear behavior with an $R^2$ value of 0.764. This means that both functions are scaling in ways we theoretically expect them to. ($R^2 = 1 means a perfect fit to theory.) 
 
-- [ ] 10. Binary search assumes the input list is already sorted. Assume it takes $\Theta(n^2)$ time to sort a list of length $n$. Suppose you know ahead of time that you will search the same list $k$ times. 
-  + What is worst-case complexity of searching a list of $n$ elements $k$ times using linear search? **TODO: your answer goes here**
-  + For binary search? **TODO: your answer goes here**
-  + For what values of $k$ is it more efficient to first sort and then use binary search versus just using linear search without sorting? **TODO: your answer goes here**
+
+- [x] 10. Binary search assumes the input list is already sorted. Assume it takes $\Theta(n^2)$ time to sort a list of length $n$. Suppose you know ahead of time that you will search the same list $k$ times. 
+  + What is worst-case complexity of searching a list of $n$ elements $k$ times using linear search?
+
+K is known ahead of time, so it does not scale with n. The entire operation is therefore O(n) for any finite k, just as it was with k = 1. Sorting is not required so cannot be completed once at the beginning to any later benefit.
+  + For binary search?
+
+Sorting is required, so the operation would be constrained by the O(n^2) sorting step, and the overall runtime is O(n^2).
+
+  + For what values of $k$ is it more efficient to first sort and then use binary search versus just using linear search without sorting?
+
+Asymtotically, as n approaches infinity, the linear search of an unordered list will always be faster than sorting (with $\Theta(n^2)$ runtime) and then binary search because $kO(n) \subset o(n^2)$ for any finite k when n is sufficiently large.

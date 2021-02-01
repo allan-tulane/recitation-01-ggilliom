@@ -40,13 +40,12 @@ def _binary_search(mylist, key, left, right):
   Returns:
     index of key in mylist, or -1 if not present.
   """
-	### TODO 
   # Elementary case.
 	if right == left:
 		# Key exists in this section.
 		if key == mylist[right]:
 			return right
-    # Key does not exists in this section.
+    # Key does not exist in this section.
 		else:
 			return -1
 
@@ -59,18 +58,15 @@ def _binary_search(mylist, key, left, right):
 	else:
 		# Check right side.
 		return _binary_search(mylist, key, mid+1, right)
-    
-	###
 
 def test_binary_search():
 	assert binary_search([1,2,3,4,5], 5) == 4
 	assert binary_search([1,2,3,4,5], 1) == 0
 	assert binary_search([1,2,3,4,5], 6) == -1
-	### TODO: add two more tests here.
 	assert binary_search([2,4,6,8,10], 8) == 3
 	assert binary_search([1], 0) == -1
 	assert binary_search([], 2) == -1
-	assert binary_search([1,2,3,4,5,6,7,8,9,10], 7) == 6
+	assert binary_search([1,2,3,4,5,6,7,8,9,10, 1234567], 7) == 6
 
 def time_search(search_fn, mylist, key):
 	"""
@@ -90,18 +86,16 @@ def time_search(search_fn, mylist, key):
 	  the number of milliseconds it takes to run this
 	  search function on this input.
 	"""
-	### TODO
-	### 
 	#record time at the beginning
-	st = 1000*time.time(); 
+	startTime = 1000*time.time(); 
   #define lambda function f (not sure whether it works...)
 	f = lambda search_fn, mylist, key: search_fn(mylist, key)
   #run the search function
 	f(search_fn, mylist, key);
   #record time after searching
-	et = 1000*time.time();
+	endTime = 1000*time.time();
   #return time difference
-	return et-st; 
+	return endTime-startTime; 
 
 def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
 	"""
@@ -119,7 +113,37 @@ def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
 	  for each method to run on each value of n
 	"""
 	### TODO
-	###
+	#key for search to test worst-case runtime
+	key = -1
+	#final list to return
+	endList = []
+	#tuple containing runtime info to be appended to the list
+	tempTuple =[]
+	#linear search runtime
+	linTime = 0
+	#binary search runtime
+	binTime = 0
+	#loop to test each list size
+
+	# Test all sizes
+	for size in sizes:
+		#empty "tuple" to start anew
+		tempTuple = []
+		#initializes list of specified input sizes
+		mylist = [1] * int(size)
+		#runtime tests
+		linTime = time_search(linear_search, mylist, key)
+		binTime = time_search(binary_search, mylist, key)
+		#add info to "tuple"
+		tempTuple.append(int(size))
+		tempTuple.append(linTime)
+		tempTuple.append(binTime)
+		#add tuple to list
+		endList.append(tempTuple)
+
+	print_results(endList)
+	
+	return endList
 
 def print_results(results):
 	""" done """
@@ -135,3 +159,5 @@ def test_compare_search():
 	assert res[1][0] == 100
 	assert res[0][1] < 1
 	assert res[1][1] < 1
+
+print_results(compare_search())

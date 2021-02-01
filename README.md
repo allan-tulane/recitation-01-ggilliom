@@ -78,11 +78,12 @@ We used scikit-learn to run a regression for both linear and binary data. Linear
 - [x] 10. Binary search assumes the input list is already sorted. Assume it takes $\Theta(n^2)$ time to sort a list of length $n$. Suppose you know ahead of time that you will search the same list $k$ times. 
   + What is worst-case complexity of searching a list of $n$ elements $k$ times using linear search?
 
-K is known ahead of time, so it does not scale with n. The entire operation is therefore O(n) for any finite k, just as it was with k = 1. Sorting is not required so cannot be completed once at the beginning to any later benefit.
+The complexity is k*O(n). The k cannot be ignored.
+
   + For binary search?
 
-Sorting is required, so the operation would be constrained by the O(n^2) sorting step, and the overall runtime is O(n^2).
+Because sorting and searching are separate processes, they must both be included in the overall runtime complexity. Therefore, it would be Theta(n^2) + k*O(log_2n)
 
   + For what values of $k$ is it more efficient to first sort and then use binary search versus just using linear search without sorting?
 
-Asymtotically, as n approaches infinity, the linear search of an unordered list will always be faster than sorting (with $\Theta(n^2)$ runtime) and then binary search because $kO(n) \subset o(n^2)$ for any finite k when n is sufficiently large.
+See Lab1prX.HEIC in files for answer.
